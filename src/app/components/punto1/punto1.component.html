@@ -1,0 +1,80 @@
+<div class="row justify-content-center">
+    <p class="mt-4 h3 col-12 text-center"><strong>Enviá tu mensaje a todo el pais GRATIS!</strong> </p>
+    <p class="col-8"><small>El servicio de mensajes cortos o SMS (Short Message Service) es un servicio disponible en los teléfonos móviles, smartphone, iphone, android, etc, que permite el envío de mensajes cortos (también conocidos como mensajes de texto, textos o mensajitos). Los mensajes pueden contener publicidad.</small></p>
+    <form class="card col-10 estructura mb-3">
+        <div class="card-header titulo text-light h4"> Envía tu mensaje</div>
+        <div class="card-body">
+            <div class="row form-group mr-1">
+                <label class="col-3 col-md-2 h5">Para</label>
+                <input class="form-control col-9 col-md-10" type="number" name="txtPara" [(ngModel)]="mensaje.para" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+            </div>
+            <div class="row form-group mr-1">
+                <label class="col-3 col-md-2 h5">De</label>
+                <input class="form-control col-9 col-md-10" type="number" name="txtDe" [(ngModel)]="mensaje.de" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+            </div>
+            <div class="row form-group">
+                <div class="col-4">
+                    <label class="h5">Tu mensaje</label>
+                </div>
+                <div class="col-8 text-right">
+                    <label class="h5">({{cantidadCaracteresDisponibles}} Caracteres restantes)</label>
+                </div>
+            </div>
+
+            <div class="row form-group ml-1 mr-1 mb-2">
+                <textarea class="form-control col" maxLength="120" rows="5" name="txtTexto" [(ngModel)]="mensaje.texto" (ngModelChange)="detectarCaracteresDisponibles()"> </textarea>
+            </div>
+            <div class="row form-group justify-content-end mb-0 mt-0 row align-items-start ml-1 mr-1">
+                <button type="button" class="btn btn-dark btn-lg mr-1 text-light" (click)="limpiarCampos()">Limpiar</button>
+                <button type="button" class="btn btn-dark btn-lg text-light" (click)="verMensaje(mensajeModal)">Enviar</button>
+            </div>
+        </div>
+    </form>
+    <div class="col-10">
+        <ng-template #mensajeModal let-modal>
+            <div class="modal-header titulo text-light">
+                <h4 class="modal-title" id="modal-basic-title ">Desea enviar el siguiente mensaje?</h4>
+                <button type="button" class="close" aria-label="Close" (click)="modal.close()"></button>
+                <span aria-hidden="true">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label>Para: {{ mensaje.para }}</label><br>
+                        <label></label>
+                        <label>De: {{ mensaje.de }} </label><br>
+                        <label></label>
+                        <label>Mensaje: {{ mensaje.texto }}</label><br>
+                        <label></label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer titulo text-light">
+                <button type="button" class="btn btn-outline-dark btn-light" (click)="modal.close()">Cancelar</button>
+                <button type="button" class="btn btn-outline-dark btn-light" (click)="enviarMensaje()" (click)="modal.close()">Enviar</button>
+            </div>
+        </ng-template>
+    </div>
+
+    <section *ngIf="mensajes.length>0" class="col-10 col-md-8">
+        <p class="h4 mt-5 mb-2">Historial de mensajes enviados recientemente</p>
+        <table class="table table-responsive-sm">
+            <thead class="titulo text-light">
+                <tr>
+                    <th cscope="col-auto">Para</th>
+                    <th scope="col-auto">De</th>
+                    <th scope="col-auto">Mensaje</th>
+                    <th scope="col-auto">Fecha de envío</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let mensaje of mensajes">
+                    <td scope="row">{{mensaje.para}}</td>
+                    <td>{{mensaje.de}}</td>
+                    <td>{{mensaje.texto}}</td>
+                    <td>{{mensaje.fecha | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</div>

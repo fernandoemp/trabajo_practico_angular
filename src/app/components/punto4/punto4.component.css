@@ -1,0 +1,19 @@
+.contenedor-crucigrama {
+    font-weight: bold;
+    color: black;
+    background-image: url(../../../assets/img/fondo2.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.casilla {
+    width: 40px;
+    height: 40px;
+    background-color: yellow;
+}
+
+.titulo {
+    color: rgba(255, 255, 255, .3);
+    text-shadow: 0 0 15px rgba(255, 255, 255, .5), 0 0 10px rgba(255, 255, 255, .5);
+    font-size: 3rem;
+}

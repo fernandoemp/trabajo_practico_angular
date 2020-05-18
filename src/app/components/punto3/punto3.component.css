@@ -1,0 +1,13 @@
+.fondo {
+    background-image: url(../../../assets/img/fondo-paisajes.jpg);
+    background-position: center;
+    background-repeat: none;
+    background-size: cover;
+    min-height: 500px;
+}
+
+.color-fondo {
+    background-color: transparent;
+    background-color: rgba(46, 47, 52, 0.9);
+    border-radius: 10px;
+}

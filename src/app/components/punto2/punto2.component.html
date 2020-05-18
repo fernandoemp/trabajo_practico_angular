@@ -1,0 +1,78 @@
+<div class="row justify-content-center">
+    <section class="col-12 angular-fondo pt-3">
+        <div class="row justify-content-center">
+            <h2 class="text-center mb-4 text-light h2"> Asistentes al Curso de ANGULAR </h2>
+            <p class="col-10 h4 mx-5 text-light">Un Framework, Mobile y Desktop Dificultad Incluye PC</p>
+            <p class="col-10 h5 mx-5 text-light">Garantía de Aprendizaje Domina el Framework Front End de Javacript más demandado del mercado.<br> Aprende a crear aplicaciones modernas en el lado del cliente, en entornos Web y Mobile </p>
+            <p class="col-10 mt-2 mb-5 text-light">Es un Framework de Javascript utilizado para crear aplicaciones web. Nos permite dividir nuestro proyecto en Componentes <br> y de esa manera reutilizar en forma eficaz nuestro código. Cada vez mas se ve la influencia de Javascript en todos
+                los niveles de desarrollo de software, no te quedes afuera de esta tendencia.</p>
+        </div>
+    </section>
+    <form class="col-10 mt-4" method="post" action="">
+        <p class="h3 mb-2">En este curso aprenderá a</p>
+        <p class="h5 mb-5">
+            Trabajar con Typescript, transformando Javascript en un lenguaje fuertemente tipado Desarrollar componentes, logrando una mayor reutilización de nuestro código. Controlar la escalabilidad de nuestras aplicaciones Construir modelos de datos en RXJS Conocer
+            uno de los mejores Frameworks de Javascript.<br><strong>Complete el siguiente formulario para recibir más información.</strong>
+        </p>
+        <div class="form-group row mr-1">
+            <label for="idemail" class="col-md-4">Usuario</label>
+            <input id="idemail" class="form-control form-control-sm col-md-8" type="email" placeholder="example@gmail.com" [(ngModel)]="asistente.usuario" name="email" />
+        </div>
+        <div class="form-group row mr-1">
+            <label for="organizacion" class="col-md-4">Nombre de la Organización</label>
+            <input id="idemaorganizacionil" class="form-control form-control-sm col-md-8" placeholder="SU ORGANIZACION.SA" [(ngModel)]="asistente.nombreOrganizacion" name="nombreOrganizacion" />
+        </div>
+        <div class="form-group row mr-1">
+            <label for="idage" class="col-md-4">Requiere Constancia</label>
+            <div class="form-check mr-3 ml-1">
+                <input class="form-check-input" type="radio" name="constancia" id="constanciasi" [value]="opcionSi" [(ngModel)]="asistente.solicitaConstancia">
+                <label class="form-check-label" for="constanciasi">
+             Si
+            </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="constancia" id="constanciano" [value]="opcionNo" checked [(ngModel)]="asistente.solicitaConstancia">
+                <label class="form-check-label" for="constanciano">
+             No
+            </label>
+            </div>
+        </div>
+        <div class="form-group text-center">
+            <button (click)="guardarFormulario()" class="btn btn-color ml-2 mr-2 text-light"><i class="fas fa-save fal"></i> Guardar</button>
+            <button (click)="limpiarCampos()" class="btn btn-color ml-2 mr-2 text-light"><i class="fas fa-times"></i> Cancelar</button>
+        </div>
+    </form>
+
+    <section *ngIf="asistentes.length>0" class="col-10 col-md-8">
+        <p class="mt-3 h3 text-dark text-left text-sm-center">Listado de usuarios inscriptos al curso</p>
+        <table class="table table-responsive-sm" [mfData]="asistentes" #mf="mfDataTable" [mfRowsOnPage]="5">
+            <thead class="titulo text-light">
+                <tr>
+                    <th scope="col-auto">
+                        <mfDefaultSorter by="usuario">Usuario</mfDefaultSorter>
+                    </th>
+                    <th scope="col-auto">
+                        <mfDefaultSorter by="nombreOrganizacion">Nombre de la Organización</mfDefaultSorter>
+                    </th>
+                    <th scope="col-auto">
+                        <mfDefaultSorter by="constancia">Requiere Constancia</mfDefaultSorter>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of mf.data">
+                    <td>{{item.usuario}}</td>
+                    <td>{{item.nombreOrganizacion | uppercase}}</td>
+                    <td>{{item.solicitaConstancia ? 'SI' : 'NO'}}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4">
+                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </section>
+</div>

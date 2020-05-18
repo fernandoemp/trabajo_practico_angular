@@ -1,0 +1,53 @@
+    .navegador {
+        background-color: rgb(42, 43, 45);
+    }
+
+    .navegador li a {
+        text-decoration: none;
+        font-size: 1.2rem;
+        color: white;
+    }
+
+    .navegador li :hover {
+        background-color: rgb(63, 65, 65);
+        color: white;
+        padding: 5px;
+        -moz-border-radius: 0px 5px 5px 5px;
+        -webkit-border-radius: 0px 5px 5px 5px;
+        border-radius: 0px 5px 5px 5px;
+    }
+
+    .ruta-activa {
+        background-color: rgb(63, 65, 65);
+        color: white !important;
+        padding: 5px;
+        -moz-border-radius: 0px 5px 5px 5px;
+        -webkit-border-radius: 0px 5px 5px 5px;
+        border-radius: 0px 5px 5px 5px;
+    }
+    /*
+    .view {
+        background: url("https://mdbootstrap.com/img/Photos/Others/img (40).jpg")no-repeat center center;
+        background-size: cover;
+    }
+
+    .navbar {
+        background-color: transparent;
+    }
+
+    .top-nav-collapse {
+        background-color: #4285F4;
+    }
+
+    @media only screen and (max-width: 768px) {
+        .navbar {
+            background-color: #4285F4;
+        }
+    }
+
+    html,
+    body,
+    header,
+    .view {
+        height: 100%;
+    }*/

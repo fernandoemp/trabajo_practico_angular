@@ -1,0 +1,100 @@
+<div class="row justify-content-center fondo text-light">
+    <form class="col-10 mt-4 color-fondo mt-5 mb-3" method="post" action="">
+        <h2 class="text-center mb-4 mt-4">Administrador de Pasajes</h2>
+        <div class="form-group row mx-auto">
+            <label for="dni" class="col-md-4">DNI</label>
+            <input id="dni" class="form-control form-control-sm col-md-8" autocomplete="off" [(ngModel)]="pasaje.dniPasajero" name="idname" />
+        </div>
+        <div class="form-group row mx-auto">
+            <label for="categoria" class="col-md-4">Categoria</label>
+            <select id="categoria" class="form-control form-control-sm col-md-8" [(ngModel)]="pasaje.categoriaPasajero" name="categoriaPasajero" (ngModelChange)="calcularPrecioFinal()">
+                  <option *ngFor="let c of categorias" [ngValue]="c.id">{{c?.categoria}}</option>
+                </select>
+        </div>
+        <div class="form-group row mx-auto">
+            <label for="precioBoleto" class="col-md-4">Precio del Boleto</label>
+            <input id="precioBoleto" class="form-control form-control-sm col-md-8" [(ngModel)]="pasaje.precioPasaje" (ngModelChange)="calcularPrecioFinal()" type="number" name="idage" />
+        </div>
+        <div class="form-group row mx-auto" *ngIf="pasaje.categoriaPasajero!=null && pasaje.precioPasaje!=null">
+            <label for="total" class="col-md-4">Total a Pagar</label>
+            <label id="total" class="form-control form-control-sm col-md-8"> {{precioFinal | currency}}</label>
+        </div>
+        <div class="form-group text-center mt-4 mb-4">
+            <button (click)="venderPasaje()" class="btn btn-light mr-1 mt-1" *ngIf="realizarVenta==true"><i class="fas fa-check"></i> REGISTRAR</button>
+            <button (click)="habilitarVenta()" class="btn btn-light  mr-1 mt-1" *ngIf="realizarVenta==false"><i class="fas fa-check"></i> Habilitar Venta</button>
+            <button (click)="modificarPasaje()" *ngIf="realizarModificacion==true" class="btn btn-light mr-1 mt-1"><i class="fas fa-pencil-alt"></i> Modificar</button>
+            <button (click)="habilitarModificacion()" *ngIf="realizarModificacion==false" class="btn btn-light mr-1 mt-1"><i class="fas fa-pencil-alt"></i> Habilitar Modificacion</button>
+            <button (click)="limpiarCampos()" class="btn btn-light  mr-1 mt-1"><i class="fas fa-times"></i> Cancelar</button>
+            <button (click)="mostrarEstadisticas()" *ngIf="estadisticas==false" class="btn btn-light mr-1 mt-1"><i class="fas fa-chart-bar"></i> Mostrar Estadisticas</button>
+            <button (click)="ocultarEstadisticas()" *ngIf="estadisticas==true" class="btn btn-light mr-1 mt-1"><i class="fas fa-chart-bar"></i> Ocultar Estadisticas</button>
+        </div>
+    </form>
+
+    <table class="table table-responsive table-striped color-fondo col-10 text-light mt-2 mb-5" [mfData]="pasajesVendidos" #mf="mfDataTable" [mfRowsOnPage]="5">
+        <thead>
+            <tr>
+                <th class="col-2">
+                    <mfDefaultSorter by="dni">Dni Pasajero</mfDefaultSorter>
+                </th>
+                <th class="col-2">
+                    <mfDefaultSorter by="categoria">Categoria</mfDefaultSorter>
+                </th>
+                <th class="col-2">
+                    <mfDefaultSorter by="precio">Precio</mfDefaultSorter>
+                </th>
+                <th class="col-2">
+                    <mfDefaultSorter by="fechaHora">Fecha y Hora de Compra</mfDefaultSorter>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of mf.data">
+                <td>{{item.dniPasajero | dni }}</td>
+                <td>{{item.categoriaPasajero | uppercase}}</td>
+                <td>{{item.precioPasaje | currency }}</td>
+                <td>{{item.fechaCompra | date: 'dd/MM/yyyy hh:mm:ss' }}</td>
+                <td>
+                    <button type="button" *ngIf="realizarModificacion==true" (click)="elegirOperacionVenta(item)" class="btn btn-light"><i class="fas fa-hand-pointer"></i> Seleccionar</button>
+                </td>
+                <td>
+                    <button type="button" (click)="eliminarOperacionVenta(item)" class="btn btn-light"><i class="fas fa-trash-alt"></i> Borrar</button>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4">
+                    <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+
+    <form class="col-md-6 text-light color-fondo mt-2 mb-5" *ngIf="estadisticas == true" method="post" action="">
+        <h2 class="text-center mt-3">Resumen de Ventas</h2>
+        <p class="col-12">Cantidad de Boletos vendidos segun categoria y totalidades</p>
+        <div class="form-group row mx-auto">
+            <label for="menores" class="col-md-4">Menores</label>
+            <label id="menores" class="form-control form-control-sm col-md-8" name="menores">{{ cantidadMenores }}</label>
+        </div>
+        <div class="form-group row mx-auto">
+            <label for="adultos" class="col-md-4">Adultos</label>
+            <label id="adultos" class="form-control form-control-sm col-md-8" name="adultos">{{ cantidadAdultos }}</label>
+        </div>
+        <div class="form-group row mx-auto">
+            <label for="jubilados" class="col-md-4">Jubilados</label>
+            <label id="jubilados" class="form-control form-control-sm col-md-8" name="jubilados">{{ cantidadJubilados }}</label>
+        </div>
+        <div class="form-group row mx-auto">
+            <label for="totalVendidos" class="col-md-4">Total de Boletos Vendidos</label>
+            <label id="totalVendidos" class="form-control form-control-sm col-md-8" name="totalVendido">{{ cantitadTotalBoletosVendidos }}</label>
+        </div>
+        <div class="form-group row mx-auto">
+            <label for="totalFacturado" class="col-md-4">Total Facturado </label>
+            <label id="totalFacturado" class="form-control form-control-sm col-md-8" name="facturacion">{{ facturacionTotal | currency }}</label>
+        </div>
+    </form>
+
+
+</div>

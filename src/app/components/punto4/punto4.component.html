@@ -1,0 +1,32 @@
+<div class="row justify-content-center contenedor-crucigrama text-center mb-0 pb-0">
+    <label class=" titulo text-center mb-3 mt-2 p-0">CROSSWORD</label>
+    <div class="w-100 d-block"></div>
+    <img class="col-6 col-sm-5 col-md-3 img-fluid h-50 w-50 rounded mx-auto mt-2" src='./../../../assets/img/logo_carga2.jpg' *ngIf="nivelActual==0" />
+    <div class="w-100 d-block"></div>
+    <div class="col-1 col-sm-4" *ngIf="nivelActual>0"></div>
+    <img class="col-7 col-sm-4 img-fluid h-25 w-25 rounded mx-auto mr-0 pr-0" [src]='palabraActual.urlImagen' *ngIf="nivelActual>0" />
+    <div class="col-4 col-sm-4 text-left ml-0 pr-0" *ngIf="nivelActual>0">
+        <label class="col-4 text-light" *ngIf="nivelActual>0"><i class="fas fa-trophy"></i> {{puntaje}}</label>
+        <div class="w-100 d-block"></div>
+        <label class="col-4 text-light" *ngIf="nivelActual>0"><i class="fas fa-heart"></i> {{cantidadVidas}}</label>
+        <div class="w-100 d-block"></div>
+    </div>
+
+    <label class="mt-4 h4 p-1 text-light bg-dark font-weight-bold" *ngIf="nivelActual==0">Categoria</label>
+    <select class="mt-4 p-0 text-light bg-dark mb-2" *ngIf="nivelActual==0" [(ngModel)]="categoria" id="categoria" name="categoria" (change)="obtenerPalabras()">
+      <option value="animales">Animales</option>
+      <option value="naturaleza">Naturaleza</option>
+      <option value="utiles">Útiles</option>
+    </select>
+
+    <div class="w-100 d-block mt-2"></div>
+    <button class="btn btn-dark btn-lg mb-3" (click)="obtenerPalabraAleatoria()" *ngIf="nivelActual == 0 && categoria != null">Jugar</button>
+
+
+    <div class="row justify-content-center mt-2 mb-5" *ngIf="nivelActual >0">
+        <div class="text-center d-inline-block" *ngFor="let item of palabraInglesArray; index as i">
+            <input type="text" autocomplete="off" class="casilla mr-1 text-center border-dark" maxlength="1" [(disabled)]="controlesCasillas[i]" [(ngModel)]="palabraUsuarioArray[i]" (ngModelChange)="comprobarPalabra(i)">
+        </div>
+        <label class="col-12 text-center text-light h3 p-2 font-weight-bold"> {{ palabraActual.palabraEspaniol | uppercase }}</label>
+    </div>
+</div>
