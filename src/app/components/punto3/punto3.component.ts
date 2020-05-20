@@ -145,6 +145,7 @@ export class Punto3Component implements OnInit {
       if (result.value) {
         this.ventaPasajeService.deletePasajeVendido(pasaje);
         this.obtenerPasajesVendidos();
+        this.limpiarCampos();
         swal.fire(
           'Venta Eliminada!',
           '',
