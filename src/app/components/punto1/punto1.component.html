@@ -1,17 +1,35 @@
-<div class="row justify-content-center">
+<section class="row justify-content-center">
     <p class="mt-4 h3 col-12 text-center"><strong>Enviá tu mensaje a todo el pais GRATIS!</strong> </p>
     <p class="col-8"><small>El servicio de mensajes cortos o SMS (Short Message Service) es un servicio disponible en los teléfonos móviles, smartphone, iphone, android, etc, que permite el envío de mensajes cortos (también conocidos como mensajes de texto, textos o mensajitos). Los mensajes pueden contener publicidad.</small></p>
-    <form class="card col-10 estructura mb-3">
+    <form #formmensaje="ngForm" class="card col-10 estructura mb-3">
         <div class="card-header titulo text-light h4"> Envía tu mensaje</div>
-        <div class="card-body">
+        <div class class="card-body">
             <div class="row form-group mr-1">
-                <label class="col-3 col-md-2 h5">Para</label>
-                <input class="form-control col-9 col-md-10" type="number" name="txtPara" [(ngModel)]="mensaje.para" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                <label class="col-4 col-md-2 h5">Para</label>
+                <input class="form-control col-8 col-md-10" type="number" name="para" id="para" #para="ngModel" required minlength="8" [(ngModel)]="mensaje.para" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                <div *ngIf="para.invalid && (para.dirty || para.touched)" class="alert alert-danger col-auto offset-4 offset-md-2">
+                    <div *ngIf="para.errors.required">
+                        Ingrese el receptor
+                    </div>
+                    <div *ngIf="para.errors.minlength">
+                        <!--deberia colocar imput type text para que funcione...-->
+                        Ingrese un numero valido
+                    </div>
+                </div>
             </div>
             <div class="row form-group mr-1">
-                <label class="col-3 col-md-2 h5">De</label>
-                <input class="form-control col-9 col-md-10" type="number" name="txtDe" [(ngModel)]="mensaje.de" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                <label class="col-4 col-md-2 h5">De</label>
+                <input class="form-control col-8 col-md-10" type="number" name="de" id="de" #de="ngModel" required minlength="8" [(ngModel)]="mensaje.de" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                <div *ngIf="de.invalid && (de.dirty || de.touched)" class="alert alert-danger col-auto offset-4 offset-md-2">
+                    <div *ngIf="de.errors.required">
+                        Ingrese el emisor
+                    </div>
+                    <div *ngIf="de.errors.minlength">
+                        Ingrese un numero valido
+                    </div>
+                </div>
             </div>
+
             <div class="row form-group">
                 <div class="col-4">
                     <label class="h5">Tu mensaje</label>
@@ -26,10 +44,12 @@
             </div>
             <div class="row form-group justify-content-end mb-0 mt-0 row align-items-start ml-1 mr-1">
                 <button type="button" class="btn btn-dark btn-lg mr-1 text-light" (click)="limpiarCampos()">Limpiar</button>
-                <button type="button" class="btn btn-dark btn-lg text-light" (click)="verMensaje(mensajeModal)">Enviar</button>
+                <button type="button" class="btn btn-dark btn-lg text-light" [disabled]="!formmensaje.form.valid" (click)="verMensaje(mensajeModal)">Enviar</button>
             </div>
         </div>
     </form>
+
+
     <div class="col-10">
         <ng-template #mensajeModal let-modal>
             <div class="modal-header titulo text-light">
@@ -77,4 +97,4 @@
             </tbody>
         </table>
     </section>
-</div>
+</section>

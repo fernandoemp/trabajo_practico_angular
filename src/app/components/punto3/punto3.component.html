@@ -1,28 +1,46 @@
 <div class="row justify-content-center fondo text-light">
-    <form class="col-10 mt-4 color-fondo mt-5 mb-3" method="post" action="">
+    <form #formregistro="ngForm" class="col-10 mt-4 color-fondo mt-5 mb-3" method="post" action="">
         <h2 class="text-center mb-4 mt-4">Administrador de Pasajes</h2>
         <div class="form-group row mx-auto">
             <label for="dni" class="col-md-4">DNI</label>
-            <input id="dni" class="form-control form-control-sm col-md-8" autocomplete="off" [(ngModel)]="pasaje.dniPasajero" name="idname" />
+            <input type="text" id="dniPasajero" name="dniPasajero" class="form-control form-control-sm col-md-8" autocomplete="off" [(ngModel)]="pasaje.dniPasajero" required minlength="7" placeholder="Documento Nacional de Identidad" #dniPasajero="ngModel" />
+            <div *ngIf="dniPasajero.invalid && (dniPasajero.dirty || dniPasajero.touched)" class="alert alert-danger col-auto offset-md-4">
+                <div *ngIf="dniPasajero.errors.required">
+                    Debe ingresar el DNI del Cliente
+                </div>
+                <div *ngIf="dniPasajero.errors.minlength">
+                    Ingrese un DNI valido con minimo 7 caracteres
+                </div>
+            </div>
         </div>
         <div class="form-group row mx-auto">
             <label for="categoria" class="col-md-4">Categoria</label>
-            <select id="categoria" class="form-control form-control-sm col-md-8" [(ngModel)]="pasaje.categoriaPasajero" name="categoriaPasajero" (ngModelChange)="calcularPrecioFinal()">
+            <select id="categoriaPasajero" type="text" class="form-control form-control-sm col-md-8" required [(ngModel)]="pasaje.categoriaPasajero" name="categoriaPasajero" #categoriaPasajero="ngModel" (ngModelChange)="calcularPrecioFinal()">
                   <option *ngFor="let c of categorias" [ngValue]="c.id">{{c?.categoria}}</option>
-                </select>
+            </select>
+            <div *ngIf="categoriaPasajero.invalid && (categoriaPasajero.dirty || categoriaPasajero.touched)" class="alert alert-danger col-auto offset-md-4">
+                <div *ngIf="categoriaPasajero.errors.required">
+                    Debe seleccionar una categoria
+                </div>
+            </div>
         </div>
         <div class="form-group row mx-auto">
-            <label for="precioBoleto" class="col-md-4">Precio del Boleto</label>
-            <input id="precioBoleto" class="form-control form-control-sm col-md-8" [(ngModel)]="pasaje.precioPasaje" (ngModelChange)="calcularPrecioFinal()" type="number" name="idage" />
+            <label for="precioPasaje" class="col-md-4">Precio del Boleto</label>
+            <input id="precioPasaje" placeholder="Precio Bruto" class="form-control form-control-sm col-md-8" [(ngModel)]="pasaje.precioPasaje" (ngModelChange)="calcularPrecioFinal()" type="number" required name="precioPasaje" #precioPasaje="ngModel" />
+            <div *ngIf="precioPasaje.invalid && (precioPasaje.dirty || precioPasaje.touched)" class="alert alert-danger col-auto offset-md-4">
+                <div *ngIf="precioPasaje.errors.required">
+                    Ingrese el precio del pasaje
+                </div>
+            </div>
         </div>
         <div class="form-group row mx-auto" *ngIf="pasaje.categoriaPasajero!=null && pasaje.precioPasaje!=null">
             <label for="total" class="col-md-4">Total a Pagar</label>
             <label id="total" class="form-control form-control-sm col-md-8"> {{precioFinal | currency}}</label>
         </div>
         <div class="form-group text-center mt-4 mb-4">
-            <button (click)="venderPasaje()" class="btn btn-light mr-1 mt-1" *ngIf="realizarVenta==true"><i class="fas fa-check"></i> REGISTRAR</button>
+            <button (click)="venderPasaje()" class="btn btn-light mr-1 mt-1" *ngIf="realizarVenta==true" [disabled]="!formregistro.form.valid"><i class="fas fa-check"></i> REGISTRAR</button>
             <button (click)="habilitarVenta()" class="btn btn-light  mr-1 mt-1" *ngIf="realizarVenta==false"><i class="fas fa-check"></i> Habilitar Venta</button>
-            <button (click)="modificarPasaje()" *ngIf="realizarModificacion==true" class="btn btn-light mr-1 mt-1"><i class="fas fa-pencil-alt"></i> Modificar</button>
+            <button (click)="modificarPasaje()" *ngIf="realizarModificacion==true" class="btn btn-light mr-1 mt-1" [disabled]="!formregistro.form.valid"><i class="fas fa-pencil-alt"></i> Modificar</button>
             <button (click)="habilitarModificacion()" *ngIf="realizarModificacion==false" class="btn btn-light mr-1 mt-1"><i class="fas fa-pencil-alt"></i> Habilitar Modificacion</button>
             <button (click)="limpiarCampos()" class="btn btn-light  mr-1 mt-1"><i class="fas fa-times"></i> Cancelar</button>
             <button (click)="mostrarEstadisticas()" *ngIf="estadisticas==false" class="btn btn-light mr-1 mt-1"><i class="fas fa-chart-bar"></i> Mostrar Estadisticas</button>
