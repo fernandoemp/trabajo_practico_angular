@@ -7,7 +7,7 @@ import { Palabra } from './../models/palabra';
 export class CrucigramaService {
 
 
-  palabras;
+  palabras: Array<any>;
   categorias;
 
   constructor() {
@@ -15,7 +15,9 @@ export class CrucigramaService {
       // tslint:disable-next-line: max-line-length
       { palabraIngles: 'pencil', palabraEspaniol: 'lapiz', urlImagen: './../../../assets/img/lapiz.jpg', categoria: 'utiles', jugado: false },
       // tslint:disable-next-line: max-line-length
-      { palabraIngles: 'gum', palabraEspaniol: 'goma', urlImagen: './../../../assets/img/goma.jpg', categoria: 'utiles', jugado: false },
+      { palabraIngles: 'eraser', palabraEspaniol: 'goma', urlImagen: './../../../assets/img/goma.jpg', categoria: 'utiles', jugado: false },
+      // tslint:disable-next-line: max-line-length
+      { palabraIngles: 'bag', palabraEspaniol: 'mochila', urlImagen: './../../../assets/img/mochila.jpg', categoria: 'utiles', jugado: false },
       // tslint:disable-next-line: max-line-length
       { palabraIngles: 'rule', palabraEspaniol: 'regla', urlImagen: './../../../assets/img/regla.jpg', categoria: 'utiles', jugado: false },
       // tslint:disable-next-line: max-line-length
@@ -25,14 +27,18 @@ export class CrucigramaService {
       // tslint:disable-next-line: max-line-length
       { palabraIngles: 'ocean', palabraEspaniol: 'oceano', urlImagen: './../../../assets/img/oceano.jpg', categoria: 'naturaleza', jugado: false },
       // tslint:disable-next-line: max-line-length
+      { palabraIngles: 'river', palabraEspaniol: 'rio', urlImagen: './../../../assets/img/rio.jpeg', categoria: 'naturaleza', jugado: false },
+      // tslint:disable-next-line: max-line-length
       { palabraIngles: 'dog', palabraEspaniol: 'perro', urlImagen: './../../../assets/img/perro.jpg', categoria: 'animales', jugado: false },
       // tslint:disable-next-line: max-line-length
       { palabraIngles: 'horse', palabraEspaniol: 'caballo', urlImagen: './../../../assets/img/caballo.jpg', categoria: 'animales', jugado: false },
       // tslint:disable-next-line: max-line-length
       { palabraIngles: 'rabbit', palabraEspaniol: 'conejo', urlImagen: './../../../assets/img/conejo.jpg', categoria: 'animales', jugado: false },
       // tslint:disable-next-line: max-line-length
-      { palabraIngles: 'cat', palabraEspaniol: 'gato', urlImagen: './../../../assets/img/gato.jpg', categoria: 'animales', jugado: false }
+      { palabraIngles: 'penguin', palabraEspaniol: 'pingüino', urlImagen: './../../../assets/img/pinguino.jpg', categoria: 'animales', jugado: false },
+
     ];
+
 
     this.categorias = [
       { id: 'animales', categoria: 'Animales' },

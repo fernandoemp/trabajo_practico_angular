@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Asistente } from 'src/app/models/asistente';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-punto2',
@@ -23,42 +24,44 @@ export class Punto2Component implements OnInit {
   ngOnInit(): void {
   }
 
-  public limpiarCampos(){
-     this.asistente = new Asistente();
+  public limpiarCampos() {
+    this.asistente = new Asistente();
   }
 
-    guardarFormulario(){
-      if (this.verificarCamposNoNulos()){
-        if (this.verificarFormatoCorreo()){
-          this.asistentes.push(this.asistente);
-          this.asistente = new Asistente();
-        }
-        else{
-          alert('Debe ingresar un correo valido');
-        }
+  guardarFormulario() {
+    if (this.verificarCamposNoNulos()) {
+      if (this.verificarFormatoCorreo()) {
+        this.asistentes.push(this.asistente);
+        swal.fire('Asistencia registrada con exito', 'Usuario ' + this.asistente.usuario, 'success');
+        this.asistente = new Asistente();
+
       }
-      else{
-        alert('Debe completar todos los campos para poder registrárse');
+      else {
+        swal.fire('Debe ingresar un correo valido', '', 'error');
+      }
+    }
+      else {
+        swal.fire('Debe completar todos los campos para poder registrárse', '', 'error');
       }
     }
 
-    verificarCamposNoNulos(): boolean {
-      return (this.asistente.usuario != null && this.asistente.nombreOrganizacion != null && this.asistente.solicitaConstancia != null);
-    }
+  verificarCamposNoNulos(): boolean {
+    return (this.asistente.usuario != null && this.asistente.nombreOrganizacion != null && this.asistente.solicitaConstancia != null);
+  }
 
-    verificarFormatoCorreo(): boolean {
-      let arroba = false;
-      let punto = false;
+  verificarFormatoCorreo(): boolean {
+    let arroba = false;
+    let punto = false;
 
-      // tslint:disable-next-line: prefer-for-of
-      for (let index = 0; index < this.asistente.usuario.length; index++) {
-          if (this.asistente.usuario[index] === '@'){
-            arroba = true;
-          }
-          if (this.asistente.usuario[index] === '.'){
-            punto = true;
-          }
+    // tslint:disable-next-line: prefer-for-of
+    for (let index = 0; index < this.asistente.usuario.length; index++) {
+      if (this.asistente.usuario[index] === '@') {
+        arroba = true;
       }
-      return (arroba && punto);
+      if (this.asistente.usuario[index] === '.') {
+        punto = true;
+      }
     }
+    return (arroba && punto);
+  }
 }

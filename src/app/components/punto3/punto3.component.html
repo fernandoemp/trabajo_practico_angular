@@ -49,10 +49,10 @@
         </thead>
         <tbody>
             <tr *ngFor="let item of mf.data">
-                <td>{{item.dniPasajero | dni }}</td>
-                <td>{{item.categoriaPasajero | uppercase}}</td>
-                <td>{{item.precioPasaje | currency }}</td>
-                <td>{{item.fechaCompra | date: 'dd/MM/yyyy hh:mm:ss' }}</td>
+                <td>{{ item.dniPasajero | moneda }}</td>
+                <td>{{ item.categoriaPasajero | uppercase}}</td>
+                <td>{{ item.precioPasaje | currency }}</td>
+                <td>{{ item.fechaCompra | date: 'dd/MM/yyyy hh:mm:ss' }}</td>
                 <td>
                     <button type="button" *ngIf="realizarModificacion==true" (click)="elegirOperacionVenta(item)" class="btn btn-light"><i class="fas fa-hand-pointer"></i> Seleccionar</button>
                 </td>

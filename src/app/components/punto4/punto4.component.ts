@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ElementRef, ViewChild } from '@angular/core';
 import { Palabra } from './../../models/palabra';
 import { CrucigramaService } from 'src/app/services/crucigrama.service';
 import swal from 'sweetalert2';
@@ -9,6 +9,7 @@ import swal from 'sweetalert2';
   styleUrls: ['./punto4.component.css']
 })
 export class Punto4Component implements OnInit {
+
   /*variables secundarias mecanismos del juego*/
   nivelActual: number;
   cantidadVidas: number;
@@ -23,6 +24,7 @@ export class Punto4Component implements OnInit {
   controlesCasillas: Array<boolean>;
   palabras: Array<any>;
   palabrasDisponibles: number;
+
 
   constructor(private crucigramaService: CrucigramaService) {
     this.nivelActual = 0;
@@ -45,16 +47,22 @@ export class Punto4Component implements OnInit {
     this.palabrasDisponibles = this.palabras.length;
   }
 
+  resetPalabra() {
+
+  }
   obtenerPalabraAleatoria() {
-    this.palabraUsuarioArray[0] = '';
+
     let palabraOk = false;
     if (this.palabrasDisponibles > 0) {
       while (!(palabraOk)) {
         // tslint:disable-next-line: prefer-const
         let posicion = Math.floor(Math.random() * (this.palabras.length - 0));
         if (this.palabras[posicion].jugado === false) {
+
           this.palabraActual = this.palabras[posicion];
           this.palabraInglesArray = Array.from(this.palabraActual.palabraIngles);
+
+
           this.nivelActual += 1;
           this.letrasAcertadas = 0;
           this.palabras[posicion].jugado = true;
@@ -64,13 +72,14 @@ export class Punto4Component implements OnInit {
       }
     }
     else {
-      swal.fire('GANASTE!','Puntaje Final ' + this.puntaje, 'success');
-      //this.palabraUsuarioArray = [];
+      swal.fire('GANASTE!', 'Puntaje Final: ' + this.puntaje, 'success');
+      this.palabraUsuarioArray = [];
       this.reiniciarJuego();
     }
   }
 
   comprobarPalabra(indice: number) {
+
     if (this.palabraUsuarioArray[indice] !== '') {
       this.palabraUsuarioArray[indice] = this.palabraUsuarioArray[indice].toUpperCase();
       if (this.palabraUsuarioArray[indice].toLowerCase() === this.palabraInglesArray[indice]) {
@@ -79,48 +88,64 @@ export class Punto4Component implements OnInit {
       }
       else {
         this.cantidadVidas -= 1;
-
       }
+
       if (this.cantidadVidas <= 0) {
-        swal.fire('PERDISTE!', 'Intentalo nuevamente', 'info');
+        swal.fire('PERDISTE!', 'La palabra era "' + this.obtenerPalabraCorrecta() + '". Intentalo nuevamente!', 'info');
         this.reiniciarJuego();
       }
-
       this.comprobarIgualdad();
-
     }
   }
 
   comprobarIgualdad() {
     if (this.letrasAcertadas === this.palabraInglesArray.length) {
-
-      swal.fire('Palabra acertada!', '' , 'success')
       this.puntaje += 1;
-      this.reiniciarCasillas();
-      this.obtenerPalabraAleatoria();
-    }
-  }
-
-  reiniciarJuego() {
-    this.nivelActual = 0;
-    this.letrasAcertadas = 0;
-    this.puntaje = 0;
-    this.cantidadVidas = 6;
-    this.categoria = null;
-    this.palabras.forEach(element => element.jugado = false);
-   // this.palabraUsuarioArray = [];//N UEVO
-    this.reiniciarCasillas();
-
-  }
-  reiniciarCasillas() {
-    for (let index = 0; index < this.palabraUsuarioArray.length; index++) {
-      this.controlesCasillas[index] = false;
-      this.palabraUsuarioArray[index] = '';
-    }
+      for (let index = 0; index < this.palabraInglesArray.length; index++) {
+        this.palabraInglesArray[index] = '';
+      }
+      swal.fire({
+        text: 'Palabra acertada!',
+        confirmButtonText: 'Ok!'
+      }).then((result) => {
+        if (result.value) {
+          for (let index = 0; index < this.palabraUsuarioArray.length; index++) {
+            this.palabraUsuarioArray[index] = '';
+          }
+        }
+        this.reiniciarCasillas();
+        this.obtenerPalabraAleatoria();
+      });
   }
 }
 
+    reiniciarJuego() {
+      this.nivelActual = 0;
+      this.letrasAcertadas = 0;
+      this.puntaje = 0;
+      this.cantidadVidas = 6;
+      this.categoria = null;
+      this.palabras.forEach(element => element.jugado = false);
+      for (let index = 0; index < this.palabraInglesArray.length; index++) {
+        this.palabraInglesArray[index] = '';
+      }
+      for (let index = 0; index < this.palabraUsuarioArray.length; index++) {
+        this.palabraUsuarioArray[index] = '';
+      }
+      this.reiniciarCasillas();
+    }
 
+    reiniciarCasillas() {
+      for (let index = 0; index < this.palabraUsuarioArray.length; index++) {
+        this.controlesCasillas[index] = false;
+      }
+    }
+
+    obtenerPalabraCorrecta(): string {
+      // tslint:disable-next-line: label-position
+      return this.palabraInglesArray.join('').toUpperCase();
+    }
+  }
 
 
 

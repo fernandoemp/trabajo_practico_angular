@@ -14,6 +14,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { Punto3Component } from './components/punto3/punto3.component';
 import { Punto4Component } from './components/punto4/punto4.component';
 import { FormatearDniPipe } from './pipes/formatear-dni.pipe';
+import { FormatearDineroPipe } from './pipes/formatear-dinero.pipe';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { FormatearDniPipe } from './pipes/formatear-dni.pipe';
     FooterComponent,
     Punto3Component,
     Punto4Component,
-    FormatearDniPipe
+    FormatearDniPipe,
+    FormatearDineroPipe
   ],
   imports: [
     BrowserModule,
