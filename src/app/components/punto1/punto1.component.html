@@ -6,26 +6,25 @@
         <div class class="card-body">
             <div class="row form-group mr-1">
                 <label class="col-4 col-md-2 h5">Para</label>
-                <input class="form-control col-8 col-md-10" type="number" name="para" id="para" #para="ngModel" required minlength="8" [(ngModel)]="mensaje.para" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                <input class="form-control col-8 col-md-10" type="text" name="para" id="para" #para="ngModel" required minlength="10" [(ngModel)]="mensaje.para" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
                 <div *ngIf="para.invalid && (para.dirty || para.touched)" class="alert alert-danger col-auto offset-4 offset-md-2">
                     <div *ngIf="para.errors.required">
                         Ingrese el receptor
                     </div>
                     <div *ngIf="para.errors.minlength">
-                        <!--deberia colocar imput type text para que funcione...-->
-                        Ingrese un numero valido
+                        Ingrese un numero valido (10)
                     </div>
                 </div>
             </div>
             <div class="row form-group mr-1">
                 <label class="col-4 col-md-2 h5">De</label>
-                <input class="form-control col-8 col-md-10" type="number" name="de" id="de" #de="ngModel" required minlength="8" [(ngModel)]="mensaje.de" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                <input class="form-control col-8 col-md-10" type="text" name="de" id="de" #de="ngModel" required minlength="10" [(ngModel)]="mensaje.de" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
                 <div *ngIf="de.invalid && (de.dirty || de.touched)" class="alert alert-danger col-auto offset-4 offset-md-2">
                     <div *ngIf="de.errors.required">
                         Ingrese el emisor
                     </div>
                     <div *ngIf="de.errors.minlength">
-                        Ingrese un numero valido
+                        Ingrese un numero valido (10)
                     </div>
                 </div>
             </div>

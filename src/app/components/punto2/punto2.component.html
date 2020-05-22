@@ -1,26 +1,31 @@
 <div class="row justify-content-center">
     <section class="col-12 angular-fondo pt-3">
-        <div class="row justify-content-center">
-            <h2 class="text-center mb-4 text-light h2"> Asistentes al Curso de ANGULAR </h2>
-            <p class="col-10 h4 mx-5 text-light">Un Framework, Mobile y Desktop Dificultad Incluye PC</p>
-            <p class="col-10 h5 mx-5 text-light">Garantía de Aprendizaje Domina el Framework Front End de Javacript más demandado del mercado.<br> Aprende a crear aplicaciones modernas en el lado del cliente, en entornos Web y Mobile </p>
-            <p class="col-10 mt-2 mb-5 text-light">Es un Framework de Javascript utilizado para crear aplicaciones web. Nos permite dividir nuestro proyecto en Componentes <br> y de esa manera reutilizar en forma eficaz nuestro código. Cada vez mas se ve la influencia de Javascript en todos
-                los niveles de desarrollo de software, no te quedes afuera de esta tendencia.</p>
-        </div>
+        <h2 class="text-center mb-4 text-light h2"> Asistentes al Curso de ANGULAR </h2>
+        <p class="col-10 h4 mx-5 text-light mx-auto">Un Framework, Mobile y Desktop Dificultad Incluye PC</p>
+        <p class="col-10 h5 mx-5 text-light mx-auto">Garantía de Aprendizaje Domina el Framework Front End de Javacript más demandado del mercado.<br> Aprende a crear aplicaciones modernas en el lado del cliente, en entornos Web y Mobile </p>
+        <p class="col-10 mt-2 mb-5 text-light mx-auto">Es un Framework de Javascript utilizado para crear aplicaciones web. Nos permite dividir nuestro proyecto en Componentes <br> y de esa manera reutilizar en forma eficaz nuestro código. Cada vez mas se ve la influencia de Javascript en todos los
+            niveles de desarrollo de software, no te quedes afuera de esta tendencia.</p>
     </section>
-    <form class="col-10 mt-4" method="post" action="">
+    <div class="col-10 ml-4 mt-4">
         <p class="h3 mb-2">En este curso aprenderá a</p>
         <p class="h5 mb-5">
             Trabajar con Typescript, transformando Javascript en un lenguaje fuertemente tipado Desarrollar componentes, logrando una mayor reutilización de nuestro código. Controlar la escalabilidad de nuestras aplicaciones Construir modelos de datos en RXJS Conocer
             uno de los mejores Frameworks de Javascript.<br><strong>Complete el siguiente formulario para recibir más información.</strong>
         </p>
+    </div>
+    <form #formasistencia="ngForm" class="col-10 ml-4" method="post" action="">
         <div class="form-group row mr-1">
-            <label for="idemail" class="col-md-4">Usuario</label>
-            <input id="idemail" class="form-control form-control-sm col-md-8" type="email" placeholder="example@gmail.com" [(ngModel)]="asistente.usuario" name="email" />
+            <label for="email" class="col-md-4">Usuario</label>
+            <input id="email" class="form-control form-control-sm col-md-8" type="email" required #email="ngModel" placeholder="example@gmail.com" [(ngModel)]="asistente.usuario" name="email" />
+            <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger col-auto offset-md-4">
+                <div *ngIf="email.errors.required">
+                    Ingrese un email valido
+                </div>
+            </div>
         </div>
         <div class="form-group row mr-1">
-            <label for="organizacion" class="col-md-4">Nombre de la Organización</label>
-            <input id="idemaorganizacionil" class="form-control form-control-sm col-md-8" placeholder="SU ORGANIZACION.SA" [(ngModel)]="asistente.nombreOrganizacion" name="nombreOrganizacion" />
+            <label for="organizacion" class="col-md-4">Nombre de la Organización (Opcional)</label>
+            <input id="idemaorganizacionil" class="form-control form-control-sm col-md-8" placeholder="SU ORGANIZACION" [(ngModel)]="asistente.nombreOrganizacion" name="nombreOrganizacion" />
         </div>
         <div class="form-group row mr-1">
             <label for="idage" class="col-md-4">Requiere Constancia</label>

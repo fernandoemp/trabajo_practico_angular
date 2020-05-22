@@ -41,12 +41,12 @@ export class Punto2Component implements OnInit {
       }
     }
       else {
-        swal.fire('Debe completar todos los campos para poder registrárse', '', 'error');
+        swal.fire('Debe completar el primer y tercer campo obligatoriamente', '', 'error');
       }
     }
 
   verificarCamposNoNulos(): boolean {
-    return (this.asistente.usuario != null && this.asistente.nombreOrganizacion != null && this.asistente.solicitaConstancia != null);
+    return (this.asistente.usuario != null && this.asistente.solicitaConstancia != null);
   }
 
   verificarFormatoCorreo(): boolean {

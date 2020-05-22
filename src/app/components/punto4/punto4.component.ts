@@ -16,7 +16,9 @@ export class Punto4Component implements OnInit {
   puntaje: number;
   letrasAcertadas: number;
   categoria: string;
-
+  // tslint:disable-next-line: max-line-length
+  letras = [ 'Q' , 'W', 'E' , 'R', 'T' , 'Y', 'U', 'I' , 'O', 'P', 'A', 'S' , 'D', 'F' , 'G', 'H', 'J' , 'K', 'L', 'Ñ', 'Z', 'X' , 'C', 'V' , 'B', 'N', 'M' ];
+  posicionLetraSeleccionada: number;
   /*variables primarias*/
   palabraActual: any;
   palabraInglesArray: Array<string>;
@@ -37,6 +39,7 @@ export class Punto4Component implements OnInit {
     this.palabrasDisponibles = 0;
     this.categoria = null;
     this.palabras = new Array<any>();
+    this.posicionLetraSeleccionada = 0;
   }
   ngOnInit(): void {
 
@@ -99,13 +102,15 @@ export class Punto4Component implements OnInit {
   }
 
   comprobarIgualdad() {
+    let palabraAcertada;
     if (this.letrasAcertadas === this.palabraInglesArray.length) {
       this.puntaje += 1;
+      palabraAcertada = this.obtenerPalabraCorrecta();
       for (let index = 0; index < this.palabraInglesArray.length; index++) {
         this.palabraInglesArray[index] = '';
       }
       swal.fire({
-        text: 'Palabra acertada!',
+        text: 'Palabra acertada!: ' + palabraAcertada,
         confirmButtonText: 'Ok!'
       }).then((result) => {
         if (result.value) {
@@ -144,6 +149,16 @@ export class Punto4Component implements OnInit {
     obtenerPalabraCorrecta(): string {
       // tslint:disable-next-line: label-position
       return this.palabraInglesArray.join('').toUpperCase();
+    }
+    detectarLetra(letraSeleccionada: string){
+      if (!(this.controlesCasillas[this.posicionLetraSeleccionada])){
+        this.palabraUsuarioArray[this.posicionLetraSeleccionada] = letraSeleccionada;
+        this.comprobarPalabra(this.posicionLetraSeleccionada);
+      }
+
+    }
+    obtenerPosicion(index: any){
+      this.posicionLetraSeleccionada = index;
     }
   }
 
